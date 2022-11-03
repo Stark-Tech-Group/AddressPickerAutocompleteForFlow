@@ -33,6 +33,8 @@
         <members>Filled_Address_Fields_Required</members>
         <members>Input_Address</members>
         <members>Input_Address_Placeholder</members>
+        <members>Latitude</members>
+        <members>Longitude</members>
         <members>Please_contact_your_admin</members>
         <members>Position_Unavailable</members>
         <members>Postal_Code</members>
