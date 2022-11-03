@@ -303,6 +303,8 @@
                     cmp.set("v.apiError", placeDetails.error_message + " " + labels.CONTACT_ADMIN);
                 } else {
                     cmp.set("v.apiError", labels.API_UNKNOWN_ERROR);
+
+                    this.setValidation(cmp);
                 }
             },
             params
