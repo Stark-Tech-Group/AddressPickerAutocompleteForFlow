@@ -33,10 +33,10 @@
     <design:attribute name="fullStreetAddress" label="Full Street Address" 
                         description="All the 'street' fields of (Premise, Street Number, Street Name)" />
     <design:attribute name="locality" label="City" />
-    <design:attribute name="administrative_area_level_1" label="Province/State" />
+    <design:attribute name="administrative_area_level_1" label="Province/State Code" />
     <design:attribute name="administrative_area_level_2" label="County" />
     <design:attribute name="postal_code" label="Postal Code" />
-    <design:attribute name="country" label="Country" />
+    <design:attribute name="country" label="Country Code" />
     <design:attribute name="formattedAddress" label="Full Formatted Address" 
                         description="Location text as seen in the search field after selecting a suggestion" />
 
