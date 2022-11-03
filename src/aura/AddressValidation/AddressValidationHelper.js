@@ -289,7 +289,7 @@
 
                     cmp.set('v.location', formattedAddress);
                     cmp.set("v.formattedAddress", formattedAddress);
-                    cmp.set("v.fullStreetAddress", fullStreetAddress);
+                    cmp.set("v.fullStreetAddress", fullStreetAddress.trim());
                     cmp.set("v.latitude", lat);
                     cmp.set("v.longitude", lng);
                     
