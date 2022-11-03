@@ -292,19 +292,19 @@
                     cmp.set("v.fullStreetAddress", fullStreetAddress.trim());
                     cmp.set("v.latitude", lat);
                     cmp.set("v.longitude", lng);
-                    
+
                     //set current values to display the correct Lat/Lng if these fields are shown
                     cmp.set("v.currentLatitude", lat);
                     cmp.set("v.currentLongitude", lng);
 
                     this.showMap(cmp, lat, lng, labels.SELECTED_ADDRESS, formattedAddress);
                     cmp.set("v.locationSelected", true);
+
+                    this.setValidation(cmp);
                 } else if(placeDetails.error_message) { // If an error message is returned
                     cmp.set("v.apiError", placeDetails.error_message + " " + labels.CONTACT_ADMIN);
                 } else {
                     cmp.set("v.apiError", labels.API_UNKNOWN_ERROR);
-
-                    this.setValidation(cmp);
                 }
             },
             params
