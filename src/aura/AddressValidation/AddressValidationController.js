@@ -43,12 +43,10 @@
         helper.setValidation(cmp);
         helper.initialiseMapData(cmp, helper);
 
-        
         // set address fields as required if configured as such in Flow
         let fieldsRequired = cmp.get("v.fieldsRequired"); // Flow attribute "Detailed Address Fields Required"
 
         if(fieldsRequired) {
-            
             // if the address fields are shown while all fields are required, they're mandatory as well
             if(cmp.get("v.showAddressFields")) {
                 let divFullAddress = cmp.find('fullAddress');
@@ -62,10 +60,29 @@
             }
         }
     },
+    // validateAddress: function(cmp, event, helper)
+    // {
+    //     const input = event.currentTarget;
+
+    //     console.log('check validity');
+    //     input.checkValidity();
+
+    //     console.log('report validity');
+    //     input.reportValidity();
+    // },
+    // handleAddressInputChange : function(cmp, event, helper){
+    //     const input = event.currentTarget;
+
+    //     console.log('check validity');
+    //     input.checkValidity();
+
+    //     console.log('report validity');
+    //     input.reportValidity();
+    //   },
     /* When typing the search text in input field */
     onAddressInput : function(cmp, event, helper) {
         let locationInput = cmp.get("v.location");
-        
+
         /* Check if the location input isn't empty */
         if(locationInput != null && locationInput != "") {
             let UUID = cmp.get("v.UUID");
@@ -103,10 +120,10 @@
         if(UUID != null && UUID != "") {
             cmp.set("v.UUID", "");
         }
-        
+
         helper.getPlaceDetails(cmp, placeid);
     },
-    
+
     latitudeChange : function(cmp, event, helper) {
          /* Manages changes to the latitude.*/
         helper.geolocationChange(cmp);
