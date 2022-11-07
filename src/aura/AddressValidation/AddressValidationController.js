@@ -37,81 +37,82 @@
     2. Input for custom fields to retrieve(?)
  */
 ({
-    doInit : function(cmp, event, helper) {
-        helper.setTitle(cmp);
-        helper.checkValidFilter(cmp);
-        helper.setValidation(cmp);
-        helper.initialiseMapData(cmp, helper);
+	doInit: function (cmp, event, helper) {
+		helper.setTitle(cmp);
+		helper.checkValidFilter(cmp);
+		helper.setValidation(cmp);
+		helper.initialiseMapData(cmp, helper);
 
-        // set address fields as required if configured as such in Flow
-        let fieldsRequired = cmp.get("v.fieldsRequired"); // Flow attribute "Detailed Address Fields Required"
+		// set address fields as required if configured as such in Flow
+		let fieldsRequired = cmp.get('v.fieldsRequired'); // Flow attribute "Detailed Address Fields Required"
 
-        if(fieldsRequired) {
-            // if the address fields are shown while all fields are required, they're mandatory as well
-            if(cmp.get("v.showAddressFields")) {
-                let divFullAddress = cmp.find('fullAddress');
-                divFullAddress.set('v.required', true);
-            }
+		if (fieldsRequired) {
+			// if the address fields are shown while all fields are required, they're mandatory as well
+			if (cmp.get('v.showAddressFields')) {
+				let divFullAddress = cmp.find('fullAddress');
+				divFullAddress.set('v.required', true);
+			}
 
-            // if county field is shown while all fields are required, it's mandatory as well
-            if(cmp.get("v.showCountyField")) {
-                let divCounty = cmp.find('countyInput');
-                divCounty.set('v.required', true);
-            }
-        }
-    },
-    /* When typing the search text in input field */
-    onAddressInput : function(cmp, event, helper) {
-        let locationInput = cmp.get("v.location");
+			// if county field is shown while all fields are required, it's mandatory as well
+			if (cmp.get('v.showCountyField')) {
+				let divCounty = cmp.find('countyInput');
+				divCounty.set('v.required', true);
+			}
+		}
+	},
+	/* When typing the search text in input field */
+	onAddressInput: function (cmp, event, helper) {
+		let locationInput = cmp.get('v.location');
 
-        /* Check if the location input isn't empty */
-        if(locationInput != null && locationInput != "") {
-            let UUID = cmp.get("v.UUID");
+		/* Check if the location input isn't empty */
+		if (locationInput != null && locationInput != '') {
+			let UUID = cmp.get('v.UUID');
 
-            /* Set searching status to true for lightning:input */
-            cmp.set("v.searching", true);
+			/* Set searching status to true for lightning:input */
+			cmp.set('v.searching', true);
 
-            /* Generate UUID session token for current search session if it doesn't exist yet */
-            if(UUID == null || UUID == "") {
-                cmp.set("v.UUID", helper.generateUUID());
-            }
+			/* Generate UUID session token for current search session if it doesn't exist yet */
+			if (UUID == null || UUID == '') {
+				cmp.set('v.UUID', helper.generateUUID());
+			}
 
-            helper.startSearch(cmp);
-        }
-        else { // When text input is empty, clear all address fields
-            var searchTimeout = cmp.get('v.searchTimeout');
-            if(searchTimeout) { // Stop search if the input was deleted
-                clearTimeout(searchTimeout);
-                cmp.set("v.searching", false);
-            }
+			helper.startSearch(cmp);
+		} else {
+			// When text input is empty, clear all address fields
+			var searchTimeout = cmp.get('v.searchTimeout');
+			if (searchTimeout) {
+				// Stop search if the input was deleted
+				clearTimeout(searchTimeout);
+				cmp.set('v.searching', false);
+			}
 
-            cmp.set('v.predictions', []);
-            helper.clearAddressFields(cmp);
-        }
-    },
-    /* When selecting a prediction available in the address suggestion list */
-    onAddressSelect : function(cmp, event, helper) { 
-        cmp.set("v.locationSelected", false);
+			cmp.set('v.predictions', []);
+			helper.clearAddressFields(cmp);
+		}
+	},
+	/* When selecting a prediction available in the address suggestion list */
+	onAddressSelect: function (cmp, event, helper) {
+		cmp.set('v.locationSelected', false);
 
-        let selected = event.currentTarget;
-        let placeid = selected.getAttribute("data-placeid");
-        let UUID = cmp.get("v.UUID");
+		let selected = event.currentTarget;
+		let placeid = selected.getAttribute('data-placeid');
+		let UUID = cmp.get('v.UUID');
 
-        /* Clear UUID session token after suggestion is selected */
-        if(UUID != null && UUID != "") {
-            cmp.set("v.UUID", "");
-        }
+		/* Clear UUID session token after suggestion is selected */
+		if (UUID != null && UUID != '') {
+			cmp.set('v.UUID', '');
+		}
 
-        helper.getPlaceDetails(cmp, placeid);
-    },
+		helper.getPlaceDetails(cmp, placeid);
+	},
 
-    latitudeChange : function(cmp, event, helper) {
-         /* Manages changes to the latitude.*/
-        helper.geolocationChange(cmp);
-    },
+	latitudeChange: function (cmp, event, helper) {
+		/* Manages changes to the latitude.*/
+		helper.geolocationChange(cmp);
+	},
 
-    longitudeChange : function(cmp, event, helper) {
-        /* Manages changes to the longitude.*/
-        helper.geolocationChange(cmp);
-    }
-})
+	longitudeChange: function (cmp, event, helper) {
+		/* Manages changes to the longitude.*/
+		helper.geolocationChange(cmp);
+	}
+});
