@@ -60,25 +60,6 @@
             }
         }
     },
-    // validateAddress: function(cmp, event, helper)
-    // {
-    //     const input = event.currentTarget;
-
-    //     console.log('check validity');
-    //     input.checkValidity();
-
-    //     console.log('report validity');
-    //     input.reportValidity();
-    // },
-    // handleAddressInputChange : function(cmp, event, helper){
-    //     const input = event.currentTarget;
-
-    //     console.log('check validity');
-    //     input.checkValidity();
-
-    //     console.log('report validity');
-    //     input.reportValidity();
-    //   },
     /* When typing the search text in input field */
     onAddressInput : function(cmp, event, helper) {
         let locationInput = cmp.get("v.location");

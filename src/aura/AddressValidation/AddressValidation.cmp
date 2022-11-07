@@ -131,7 +131,6 @@
             <!-- Size is 12 if region is small or undetermined, or if region is medium/large and map is off, otherwise it's 6 -->
             <lightning:layoutItem padding="horizontal-medium" size="{!or(or(v.width == 'SMALL', v.width == null), and(or(v.width == 'MEDIUM', v.width == 'LARGE'), v.showMap == false)) ? 12 : 6}">
                 <lightning:inputAddress aura:id="fullAddress"
-                                        onchange="{!c.handleAddressInputChange}"
                                         addressLabel="{!v.addressLabel}"
                                         streetLabel="{!$Label.c.Street}"
                                         cityLabel="{!$Label.c.City}"
