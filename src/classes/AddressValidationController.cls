@@ -11,6 +11,21 @@
 
  */
 global with sharing class AddressValidationController {
+	global static Boolean countryStatePicklistsEnabled() {
+		return Schema.SObjectType.Account.fields.getMap().containsKey('BillingStateCode');
+	}
+
+	@AuraEnabled
+	global static Map<string, Map<string, string>> getCountryStatePicklistDetails() {
+		if (!countryStatePicklistsEnabled()) {
+			throw SCPicklistFeatureNotEnabledException.Create();
+		} else {
+			return new Map<string, Map<string, string>>{
+				'CountryCodeCountryMap' => getCodeValues(User.Countrycode.getDescribe()),
+				'StateCodeStateMap' => getCodeValues(User.statecode.getDescribe())
+			};
+		}
+	}
 	@AuraEnabled
 	global static string getSuggestions(String input, String latitude, String longitude, String sessionToken) {
 		/* https://developers.google.com/places/web-service/autocomplete#place_types */
@@ -110,5 +125,17 @@ global with sharing class AddressValidationController {
 	global static Boolean describeLabels() {
 		String ComponentTitle = System.Label.Title;
 		return true;
+	}
+
+	private static Map<string, string> getCodeValues(Schema.DescribeFieldResult fieldResult) {
+		Map<string, string> result = new Map<string, string>();
+
+		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+
+		for (Schema.PicklistEntry f : ple) {
+			result.put(f.getValue(), f.getLabel());
+		}
+
+		return result;
 	}
 }

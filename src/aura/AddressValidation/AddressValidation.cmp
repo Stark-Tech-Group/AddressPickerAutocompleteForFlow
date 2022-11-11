@@ -2,6 +2,7 @@
 	<!-- Data Attributes -->
 	<aura:attribute name="title" type="String" />
 	<aura:attribute name="width" type="String" />
+	<aura:attribute name="countryStatePickDetails" type="Map" />
 	<aura:attribute name="currentLatitude" type="String" />
 	<aura:attribute name="currentLongitude" type="String" />
 	<aura:attribute name="location" type="String" default="" />
@@ -17,6 +18,8 @@
 	<!-- Validation Attributes -->
 	<aura:attribute name="isRequired" type="Boolean" default="false" required="true" />
 	<aura:attribute name="fieldsRequired" type="Boolean" default="false" required="true" />
+	<aura:attribute name="valCountryStateCodeAgainstOrgPicks" type="Boolean" default="false" required="true" />
+
 	<aura:attribute name="locationSelected" type="Boolean" default="false" />
 	<aura:attribute
 		name="validate"

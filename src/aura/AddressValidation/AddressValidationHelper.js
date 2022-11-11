@@ -41,12 +41,24 @@
 
 		$A.enqueueAction(action);
 	},
+	getCountryStatePicklistDetails: function (cmp) {
+		if (cmp.get('v.valCountryStateCodeAgainstOrgPicks')) {
+			this.callServer(
+				cmp,
+				'c.getCountryStatePicklistDetails',
+				function (response) {
+					cmp.set('v.countryStatePickDetails', response);
+				},
+				null
+			);
+		}
+	},
 	setTitle: function (cmp) {
 		/* Set the Dynamic Component Labels */
 		let titleLabel = '$Label.' + cmp.get('v.titleLabel');
 		cmp.set('v.title', $A.getReference(titleLabel));
 	},
-	setValidation: function (cmp) {
+	setValidation: function (cmp, helper) {
 		let labels = {
 			SEARCH_AND_ALL_ADDRESS_FIELDS_REQUIRED: $A.get('$Label.c.Search_and_All_Address_Fields_Required'),
 			SEARCH_AND_ADDRESS_FIELD_REQUIRED: $A.get('$Label.c.Search_and_Address_Field_Required'),
@@ -57,6 +69,7 @@
 			// let locationSelected = cmp.get("v.locationSelected");
 			let isRequired = cmp.get('v.isRequired');
 			let fieldsRequired = cmp.get('v.fieldsRequired');
+			let valCountryStateCodeAgainstOrgPicks = cmp.get('v.valCountryStateCodeAgainstOrgPicks');
 
 			let showAddressFields = cmp.get('v.showAddressFields');
 			let showCountyField = cmp.get('v.showCountyField');
@@ -74,6 +87,23 @@
 			addressFields.forEach(function (value) {
 				value == null || value == '' ? (addressFieldEmpty = true) : '';
 			});
+
+			if (valCountryStateCodeAgainstOrgPicks) {
+				let addressValResult = helper.validateAddressCountryStatePickVals(cmp);
+
+				if (!addressValResult.isValid) {
+					return {
+						isValid: false,
+						errorMessage: `${
+							!addressValResult.isCountryCodeValid
+								? `The Country Code: ${addressValResult.countryCode} is not a valid entry in this organizations picklist.`
+								: ''
+						}
+							${!addressValResult.isStateCodeValid ? `The State Code ${addressValResult.stateCode} is not a valid entry in this organizations picklist.` : ''}
+							Please verify your input is correct, otherwise notify your System Administrator.`
+					};
+				}
+			}
 
 			if (fieldsRequired && isRequired) {
 				if (locationValue.length > 0 && !addressFieldEmpty) {
@@ -404,6 +434,30 @@
 		addressInput.reportValidity();
 
 		addressInput.focus();
+
 		addressInput.blur();
+	},
+	validateAddressCountryStatePickVals: function (cmp) {
+		let pickValDetails = cmp.get('v.countryStatePickDetails');
+
+		let stateCodeVal = cmp.get('v.administrative_area_level_1');
+
+		let countryCodeVal = cmp.get('v.country');
+
+		let stateLowercase = stateCodeVal.toLowerCase();
+		let countryLowercase = countryCodeVal.toLowerCase();
+
+		let countryCodePickVal = Object.keys(pickValDetails.CountryCodeCountryMap).find((key) => key.toLowerCase() === countryLowercase);
+		let stateCodePickVal = Object.keys(pickValDetails.StateCodeStateMap).find((key) => key.toLowerCase() === stateLowercase);
+
+		return {
+			countryCode: countryCodeVal,
+			countrCodePickVal: countryCodePickVal,
+			isValid: stateCodePickVal && countryCodePickVal,
+			isCountryCodeValid: countryCodePickVal ? true : false,
+			isStateCodeValid: stateCodePickVal ? true : false,
+			stateCode: stateCodeVal,
+			stateCodePickVal: stateCodePickVal
+		};
 	}
 });
