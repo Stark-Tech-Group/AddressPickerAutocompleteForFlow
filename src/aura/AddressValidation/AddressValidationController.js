@@ -40,8 +40,9 @@
 	doInit: function (cmp, event, helper) {
 		helper.setTitle(cmp);
 		helper.checkValidFilter(cmp);
-		helper.setValidation(cmp);
+		helper.setValidation(cmp, helper);
 		helper.initialiseMapData(cmp, helper);
+		helper.getCountryStatePicklistDetails(cmp);
 
 		// set address fields as required if configured as such in Flow
 		let fieldsRequired = cmp.get('v.fieldsRequired'); // Flow attribute "Detailed Address Fields Required"

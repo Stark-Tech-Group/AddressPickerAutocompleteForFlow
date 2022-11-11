@@ -6,6 +6,7 @@
         <members>AddressValidationController</members>
         <members>AddressValidationControllerTest</members>
         <members>MockHttpResponseGenerator</members>
+        <members>SCPicklistFeatureNotEnabledException</members>
         <name>ApexClass</name>
     </types>
     <types>

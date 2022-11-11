@@ -1,6 +1,15 @@
 @isTest(SeeAllData=true)
 public class AddressValidationControllerTest {
 	@isTest
+	static void getCountryStatePicklistDetailsReturnsDetails() {
+		if (AddressValidationController.countryStatePicklistsEnabled()) {
+			Map<string, Map<string, string>> pickVals = AddressValidationController.getCountryStatePicklistDetails();
+
+			System.assert(!pickVals.isEmpty());
+		}
+	}
+
+	@isTest
 	static void validateGetSuggestions() {
 		//Test.setMock(AddressValidationController.class, new AddressValidationController());
 		Test.startTest();
@@ -15,6 +24,7 @@ public class AddressValidationControllerTest {
 
 		Test.stopTest();
 	}
+
 	@isTest
 	static void validateGetPlaceDetails() {
 		Test.startTest();
@@ -27,6 +37,7 @@ public class AddressValidationControllerTest {
 
 		Test.stopTest();
 	}
+
 	@isTest
 	static void describeLabelsTest() {
 		Boolean TestOk = AddressValidationController.describeLabels();
