@@ -444,8 +444,8 @@
 
 		let countryCodeVal = cmp.get('v.country');
 
-		let stateLowercase = stateCodeVal.toLowerCase();
-		let countryLowercase = countryCodeVal.toLowerCase();
+        let countryLowercase = countryCodeVal ? countryCodeVal.toLowerCase() : 'invalid';
+		let stateLowercase = stateCodeVal ? stateCodeVal.toLowerCase() : 'invalid';
 
 		let countryCodePickVal = Object.keys(pickValDetails.CountryCodeCountryMap).find((key) => key.toLowerCase() === countryLowercase);
 		let stateCodePickVal = Object.keys(pickValDetails.StateCodeStateMap).find((key) => key.toLowerCase() === stateLowercase);
